@@ -47,7 +47,10 @@ RUN apt-get update -y \
 	&& npm install bower -g \
 	&& npm install eslint -g \
 	&& npm install sass-lint -g \
-	&& npm install npm-check -g
+	&& npm install npm-check -g \
+	&& npm install prettier -g \
+	&& npm install typescript -g \
+	&& npm install rimraf -g
 
 # ZSH
 RUN apt-get update -y \
