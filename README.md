@@ -22,6 +22,9 @@ The starting point of this docker image is ubuntu:16.04.
   - eslint
   - sass-lint
   - npm-check
+  - prettier
+  - typescript
+  - rimraf
 - phpcs
   - wpcs
   - phpcompatibility
