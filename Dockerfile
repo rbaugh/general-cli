@@ -66,11 +66,11 @@ RUN	apt-get update -y \
 	&& cd /utilities \
 	&& git clone https://github.com/PHPCompatibility/PHPCompatibility.git \
 	&& cd PHPCompatibility \
-	&& git checkout tags/8.1.0 \
+	&& git checkout tags/9.0.0 \
 	&& cd /utilities \
 	&& git clone https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git \
 	&& cd WordPress-Coding-Standards \
-	&& git checkout tags/0.14.1
+	&& git checkout tags/1.1.0
 
 RUN /root/.composer/vendor/bin/phpcs --config-set installed_paths /utilities/WordPress-Coding-Standards,/utilities/PHPCompatibility
 
