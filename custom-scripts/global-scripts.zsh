@@ -89,14 +89,28 @@ wp-init() {
     	TABLE_PREFIX_NEW="\$table_prefix = '"$NEW_VALUE"_';"
     	sed -i "/$TABLE_PREFIX/c\\$TABLE_PREFIX_NEW" ./wp-config.php
 
+		echo "\n================================================================="
+		echo "Running NPM & Gulp "
+		echo "================================================================="
+
     	# cd into theme
 		cd $SERVER_DIR/wp-content/themes/wp-foundation-six
 
-		echo "\nRunning NPM"
-		npm install
+
+		if [ -d "$SERVER_DIR/wp-content/themes/wp-foundation-six/node_modules" ]; then
+			echo "\nRunning npm rebuild node-sass"
+			npm rebuild node-sass
+		else
+			echo "\nRunning npm install"
+			npm install
+		fi
 
 		echo "\nRunning Gulp"
-		gulp
+		gulp --skip_lint
+
+		echo "\n================================================================="
+		echo "Running WP-CLI for WP Defaults"
+		echo "================================================================="
 
 		cd $SERVER_DIR
 
@@ -163,23 +177,38 @@ wp-eject() {
 		EJECTED_PROJECT_DIR=wp_foundation_six_$(date +"%Y%m%d%H%M%s")
 		take $EJECTED_PROJECT_DIR
 
+		echo "\n================================================================="
+		echo "Downloading WordPress Core"
+		echo "================================================================="
+
 		wp core download --allow-root
+
+		echo "\n================================================================="
+		echo "Copying wp-content without theme into clean WP Install"
+		echo "================================================================="
 
 		rm -rf wp-content
 
-		rsync -av --progress $SERVER_DIR/wp-content ./ --exclude wp-foundation-six
+		rsync -a $SERVER_DIR/wp-content ./ --exclude 'wp-foundation-six*'
 
 		if [ -d "$SERVER_DIR/wp-content/themes/wp-foundation-six" ]; then
+			echo "\n================================================================="
+			echo "Building and copying theme to clean install"
+			echo "================================================================="
 
 			cd $SERVER_DIR/wp-content/themes/wp-foundation-six
 
-			npm install
+			if [ -d "$SERVER_DIR/wp-content/themes/wp-foundation-six/node_modules" ]; then
+				npm rebuild node-sass
+			else
+				npm install
+			fi
 
-			gulp --build
+			gulp --build --skip_lint --silent
 
 			cd $EJECTED_DIR/$EJECTED_PROJECT_DIR
 
-			rsync -av --progress $SERVER_DIR/wp-content/themes/wp-foundation-six-build ./wp-content/themes
+			rsync -a $SERVER_DIR/wp-content/themes/wp-foundation-six-build ./wp-content/themes
 
 			mv ./wp-content/themes/wp-foundation-six-build ./wp-content/themes/wp-foundation-six
 
@@ -189,14 +218,14 @@ wp-eject() {
 
 			cd $EJECTED_DIR
 
-			zip -r $EJECTED_PROJECT_DIR.zip $EJECTED_PROJECT_DIR
+			echo "\n================================================================="
+			echo "Zipping Project"
+			echo "================================================================="
+
+			zip -qr - $EJECTED_PROJECT_DIR | pv -bep -s $(du -bs $EJECTED_PROJECT_DIR | awk '{print $1}') > $EJECTED_PROJECT_DIR.zip
 
 			rm -rf $EJECTED_PROJECT_DIR
 			rm -rf $SERVER_DIR/wp-content/themes/wp-foundation-six-build
-
-			cd $SERVER_DIR/wp-content/themes/wp-foundation-six
-
-			gulp
 
 			cd $WORKING_DIR
 

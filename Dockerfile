@@ -34,6 +34,8 @@ RUN	apt-get update -y \
 RUN apt-get update -y \
 	&& apt-get install nano -y \
 	&& apt-get install git -y \
+	&& apt-get install rsync -y \
+	&& apt-get install pv -y \
 	&& curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
 	&& export NVM_DIR="$HOME/.nvm" \
 	&& [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
