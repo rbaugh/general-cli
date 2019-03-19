@@ -2,9 +2,15 @@ FROM ubuntu:18.04
 
 # PHP
 RUN apt-get update -y \
+	&& apt-get install software-properties-common -y \
+	&& add-apt-repository ppa:ondrej/php -y \
+	&& apt-get update -y \
+	&& apt-get install php7.3-fpm -y
+
+# Extensions
+RUN apt-get update -y \
 	&& apt-get install curl -y \
 	&& apt-get install wget -y \
-	&& apt-get install php7.0 -y \
 	&& apt-get install zip -y \
 	&& apt-get install mysql-client -y \
 	&& apt-get install php-mysql -y \
@@ -21,7 +27,6 @@ RUN apt-get update -y \
 
 # Neovim & tmux
 RUN	apt-get update -y \
-	&& apt-get install software-properties-common -y \
 	&& add-apt-repository ppa:neovim-ppa/stable -y \
 	&& apt-get update -y \
 	&& apt-get install neovim -y \
