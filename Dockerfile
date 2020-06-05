@@ -47,8 +47,8 @@ RUN apt-get update -y \
 	&& [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
 	&& [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
 	&& nvm install node \
-	&& nvm install v12.14.1 \
-	&& nvm alias default v12.14.1 \
+	&& nvm install v12.18.0 \
+	&& nvm alias default v12.18.0 \
 	&& npm install gulp -g \
 	&& npm install eslint -g \
 	&& npm install prettier -g \
@@ -72,7 +72,7 @@ RUN	apt-get update -y \
 	&& cd /utilities \
 	&& git clone https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git \
 	&& cd WordPress-Coding-Standards \
-	&& git checkout tags/2.2.0
+	&& git checkout tags/2.3.0
 
 RUN /root/.composer/vendor/bin/phpcs --config-set installed_paths /utilities/WordPress-Coding-Standards,/utilities/PHPCompatibility
 COPY custom-scripts/global-scripts.zsh /root/custom-scripts/global-scripts.zsh
@@ -81,11 +81,11 @@ COPY custom-scripts/init.vim /root/.config/nvim/init.vim
 COPY custom-scripts/.tmux.conf /root/.tmux.conf
 COPY custom-scripts/.zshrc /root/.zshrc
 
-RUN ln -s /root/.nvm/versions/node/v12.14.1/bin/node /usr/bin/node \
-	&& ln -s /root/.nvm/versions/node/v12.14.1/bin/npm /usr/bin/npm \
-	&& ln -s /root/.nvm/versions/node/v12.14.1/bin/yarn /usr/bin/yarn \
-	&& ln -s /root/.nvm/versions/node/v12.14.1/bin/gulp /usr/bin/gulp \
-	&& ln -s /root/.nvm/versions/node/v12.14.1/bin/grunt /usr/bin/grunt \
+RUN ln -s /root/.nvm/versions/node/v12.18.0/bin/node /usr/bin/node \
+	&& ln -s /root/.nvm/versions/node/v12.18.0/bin/npm /usr/bin/npm \
+	&& ln -s /root/.nvm/versions/node/v12.18.0/bin/yarn /usr/bin/yarn \
+	&& ln -s /root/.nvm/versions/node/v12.18.0/bin/gulp /usr/bin/gulp \
+	&& ln -s /root/.nvm/versions/node/v12.18.0/bin/grunt /usr/bin/grunt \
 	&& ln -s /usr/local/bin/wp /usr/bin/wp-cli
 
 # Misc.
