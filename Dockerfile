@@ -8,15 +8,15 @@ RUN apt-get update -y \
 	&& apt-get install software-properties-common -y \
 	&& add-apt-repository ppa:ondrej/php -y \
 	&& apt-get update -y \
-	&& apt-get install php8.0 -y \
-	&& apt-get install php8.0-fpm -y \
-	&& apt-get install php8.0-cli -y \
-	&& apt-get install php8.0-common -y \
-	&& apt-get install php8.0-mbstring -y \
-	&& apt-get install php8.0-mysql -y \
-	&& apt-get install php8.0-mysqli -y \
-	&& apt-get install php8.0-xml -y \
-	&& apt-get install php8.0-imagick -y
+	&& apt-get install php8.2 -y \
+	&& apt-get install php8.2-fpm -y \
+	&& apt-get install php8.2-cli -y \
+	&& apt-get install php8.2-common -y \
+	&& apt-get install php8.2-mbstring -y \
+	&& apt-get install php8.2-mysql -y \
+	&& apt-get install php8.2-mysqli -y \
+	&& apt-get install php8.2-xml -y \
+	&& apt-get install php8.2-imagick -y
 
 # Extensions
 RUN apt-get update -y \
